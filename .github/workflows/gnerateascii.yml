@@ -4,18 +4,24 @@ on:
   push
 
 jobs:
-    ascii_job:
-        runs-on: unbuntu-latest
-        steps:
-            - name: checkout repo
-              uses: actions/checkout@v4
-            - name: install cowsay program
-              run: sudo apt -get install cowsay -y
-            - name: execute cowsay CMD 
-              run: cowsay -f dragon "Run for cober, I am DRAGON..... RAWR" >> dragon.txt
-            - name: Test file Exits
-              run: grep i "dragon" dragon.txt
-            - name: Read file
-              run: cat dragon.txt
-            - name: list Repo Files
-              run: ls -ltra
+  ascii_job:
+    runs-on: ubuntu-latest  # ✅ corrected typo: "unbuntu-latest" ➝ "ubuntu-latest"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install cowsay program
+        run: sudo apt-get install cowsay -y  # ✅ fixed: "apt -get" ➝ "apt-get"
+
+      - name: Execute cowsay CMD
+        run: cowsay -f dragon "Run for cover, I am DRAGON..... RAWR" >> dragon.txt
+        # ✅ fixed typo: "cober" ➝ "cover"
+
+      - name: Test file exists
+        run: grep -i "dragon" dragon.txt  # ✅ fixed: "i" ➝ "-i" (for case-insensitive search)
+
+      - name: Read file
+        run: cat dragon.txt
+
+      - name: List repo files
+        run: ls -ltra  # ✅ spacing for clarity
