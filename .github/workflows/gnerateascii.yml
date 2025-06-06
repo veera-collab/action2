@@ -10,9 +10,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Make shell script executable
-        run: chmod +x ascii-shell.sh
+      - name: List repo files
+        run: ls -ltra  # ✅ spacing for clarity
 
-      - name: Run dragon script
-        run: ./ascii-shell.sh
+      - name: Executing shell script
+        run: 
+          chmod +x ascii-shell.sh
+          ./ascii-shell.sh
 
