@@ -1,17 +1,50 @@
-name: generate ascii artwork
+name: ascii dragon workflow
 
-on:
-  push
+on: push
 
 jobs:
-  ascii_job:
+  generate:
+    name: Generate dragon ASCII file
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Make shell script executable
-        run: chmod +x .github/workflows/ascii-shell.sh
+      - name: Install cowsay
+        run: sudo apt-get update && sudo apt-get install -y cowsay
 
-      - name: Run dragon script
-        run: .github/workflows/ascii-shell.sh
+      - name: Create dragon ASCII art
+        run: cowsay -f dragon "Run for cover, I am DRAGON..... RAWR" > dragon.txt
+
+      - name: Upload artifact (dragon.txt)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dragon-artifact
+          path: dragon.txt
+
+  read:
+    name: Read ASCII file
+    runs-on: ubuntu-latest
+    needs: generate
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dragon-artifact
+
+      - name: Print file
+        run: cat dragon.txt
+
+  check:
+    name: Verify dragon file
+    runs-on: ubuntu-latest
+    needs: generate
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dragon-artifact
+
+      - name: Check if file contains "dragon"
+        run: grep -i "dragon" dragon.txt
+
