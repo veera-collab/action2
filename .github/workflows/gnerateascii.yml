@@ -5,23 +5,14 @@ on:
 
 jobs:
   ascii_job:
-    runs-on: ubuntu-latest  # ✅ corrected typo: "unbuntu-latest" ➝ "ubuntu-latest"
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install cowsay program
-        run: sudo apt-get install cowsay -y  # ✅ fixed: "apt -get" ➝ "apt-get"
+      - name: Make shell script executable
+        run: chmod +x ascii-shell.sh
 
-      - name: Execute cowsay CMD
-        run: cowsay -f dragon "Run for cover, I am DRAGON..... RAWR" >> dragon.txt
-        # ✅ fixed typo: "cober" ➝ "cover"
+      - name: Run dragon script
+        run: ./ascii-shell.sh
 
-      - name: Test file exists
-        run: grep -i "dragon" dragon.txt  # ✅ fixed: "i" ➝ "-i" (for case-insensitive search)
-
-      - name: Read file
-        run: cat dragon.txt
-
-      - name: List repo files
-        run: ls -ltra  # ✅ spacing for clarity
